@@ -1,0 +1,1464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1AlphaProjects | Elite Forex Trading & Intelligence</title>
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* ==========================================================================
+           1. RESET & DESIGN SYSTEM VARIABLES
+           ========================================================================== */
+        :root {
+            --bg-dark: #050811;
+            --bg-card: rgba(13, 22, 41, 0.55);
+            --bg-card-hover: rgba(20, 35, 65, 0.7);
+            --border-glass: rgba(0, 210, 255, 0.18);
+            --border-glow: rgba(0, 210, 255, 0.6);
+            
+            --cyan-primary: #00d2ff;
+            --blue-accent: #0066ff;
+            --neon-glow: #00f0ff;
+            
+            --text-main: #f0f6fc;
+            --text-muted: #94a3b8;
+            --text-dim: #64748b;
+            
+            --font-family: 'Plus Jakarta Sans', sans-serif;
+            --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: var(--font-family);
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Ambient Background Glows */
+        .ambient-glow-1 {
+            position: fixed;
+            top: -10%;
+            left: -10%;
+            width: 50vw;
+            height: 50vw;
+            background: radial-gradient(circle, rgba(0, 102, 255, 0.15) 0%, rgba(5, 8, 17, 0) 70%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .ambient-glow-2 {
+            position: fixed;
+            bottom: -10%;
+            right: -10%;
+            width: 60vw;
+            height: 60vw;
+            background: radial-gradient(circle, rgba(0, 210, 255, 0.12) 0%, rgba(5, 8, 17, 0) 70%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* Glassmorphism Common Class */
+        .glass-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border-glass);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            transition: var(--transition-smooth);
+        }
+
+        .glass-card:hover {
+            border-color: var(--border-glow);
+            box-shadow: 0 0 25px rgba(0, 210, 255, 0.25);
+        }
+
+        /* Gradient Text */
+        .gradient-text {
+            background: linear-gradient(135deg, #ffffff 0%, var(--cyan-primary) 50%, var(--blue-accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-dark);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--bg-card);
+            border-radius: 4px;
+            border: 1px solid var(--border-glass);
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--cyan-primary);
+        }
+
+        /* ==========================================================================
+           2. NAVIGATION BAR
+           ========================================================================== */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1.2rem 4rem;
+            background: rgba(5, 8, 17, 0.75);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 42px;
+            height: 42px;
+            background: linear-gradient(135deg, var(--cyan-primary), var(--blue-accent));
+            clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 15px var(--cyan-primary);
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: #fff;
+        }
+
+        .logo-text span {
+            color: var(--cyan-primary);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: var(--transition-smooth);
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--cyan-primary);
+            text-shadow: 0 0 10px rgba(0, 210, 255, 0.5);
+        }
+
+        .btn-nav {
+            padding: 0.6rem 1.4rem;
+            background: linear-gradient(135deg, var(--cyan-primary), var(--blue-accent));
+            color: #fff !important;
+            border-radius: 30px;
+            font-weight: 600;
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.3);
+            transition: var(--transition-smooth);
+        }
+
+        .btn-nav:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 25px rgba(0, 210, 255, 0.6);
+        }
+
+        /* ==========================================================================
+           3. HERO SECTION
+           ========================================================================== */
+        .hero {
+            min-height: 100vh;
+            padding: 8rem 4rem 4rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 4rem;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 650px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            background: rgba(0, 210, 255, 0.1);
+            border: 1px solid var(--border-glow);
+            border-radius: 30px;
+            color: var(--cyan-primary);
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 0 10px rgba(0, 210, 255, 0.2);
+        }
+
+        .badge i {
+            font-size: 0.75rem;
+        }
+
+        .hero h1 {
+            font-size: 3.8rem;
+            line-height: 1.1;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .btn-primary {
+            padding: 1rem 2.2rem;
+            background: linear-gradient(135deg, var(--cyan-primary), var(--blue-accent));
+            color: #fff;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 0 20px rgba(0, 210, 255, 0.4);
+            transition: var(--transition-smooth);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 30px rgba(0, 210, 255, 0.7);
+        }
+
+        .btn-secondary {
+            padding: 1rem 2.2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-glass);
+            color: var(--text-main);
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: var(--transition-smooth);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--cyan-primary);
+            color: var(--cyan-primary);
+            background: rgba(0, 210, 255, 0.05);
+        }
+
+        .hero-visual {
+            position: relative;
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+
+        .founder-img-wrapper {
+            position: relative;
+            width: 380px;
+            height: 480px;
+            border-radius: 24px;
+            overflow: hidden;
+            border: 2px solid var(--border-glow);
+            box-shadow: 0 0 30px rgba(0, 210, 255, 0.3);
+        }
+
+        .founder-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero-floating-card {
+            position: absolute;
+            bottom: -20px;
+            left: -30px;
+            padding: 1.2rem 1.8rem;
+            background: rgba(5, 8, 17, 0.85);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-glow);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .hero-floating-card i {
+            font-size: 2rem;
+            color: var(--cyan-primary);
+        }
+
+        /* ==========================================================================
+           4. FOUNDER SECTION
+           ========================================================================== */
+        .section-padding {
+            padding: 6rem 4rem;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.8rem;
+        }
+
+        .section-title p {
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .founder-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .founder-card-img {
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid var(--border-glass);
+            position: relative;
+        }
+
+        .founder-card-img img {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .founder-info h3 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .founder-role {
+            color: var(--cyan-primary);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .founder-bio {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            margin-bottom: 2rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            padding: 1.2rem;
+            text-align: center;
+        }
+
+        .stat-card h4 {
+            font-size: 1.8rem;
+            color: var(--cyan-primary);
+            font-weight: 800;
+        }
+
+        .stat-card p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .social-btn {
+            padding: 0.8rem 1.2rem;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border-glass);
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition-smooth);
+        }
+
+        .social-btn:hover {
+            border-color: var(--cyan-primary);
+            color: var(--cyan-primary);
+            background: rgba(0,210,255,0.1);
+            transform: translateY(-2px);
+        }
+
+        /* ==========================================================================
+           5. SERVICES & PRICING / APPLICATION SECTION
+           ========================================================================== */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .service-card {
+            padding: 2.5rem 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .service-card.popular {
+            border-color: var(--cyan-primary);
+            box-shadow: 0 0 30px rgba(0, 210, 255, 0.2);
+        }
+
+        .popular-tag {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: linear-gradient(135deg, var(--cyan-primary), var(--blue-accent));
+            color: #fff;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .service-header i {
+            font-size: 2.5rem;
+            color: var(--cyan-primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .service-header h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .service-header p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .price-tag {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 1.5rem;
+        }
+
+        .price-tag span {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        .service-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .service-features li {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .service-features li i {
+            color: var(--cyan-primary);
+            font-size: 0.8rem;
+        }
+
+        /* ==========================================================================
+           6. MULTI-STEP APPLICATION MODAL & CARDS
+           ========================================================================== */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 8, 17, 0.85);
+            backdrop-filter: blur(12px);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .modal-content {
+            width: 100%;
+            max-width: 650px;
+            padding: 2.5rem;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .close-modal:hover {
+            color: var(--cyan-primary);
+        }
+
+        .application-note {
+            background: rgba(0, 210, 255, 0.08);
+            border-left: 4px solid var(--cyan-primary);
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .step-progress {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 2rem;
+        }
+
+        .step-bar {
+            height: 4px;
+            flex: 1;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            transition: var(--transition-smooth);
+        }
+
+        .step-bar.active {
+            background: var(--cyan-primary);
+            box-shadow: 0 0 10px var(--cyan-primary);
+        }
+
+        .card-question {
+            display: none;
+        }
+
+        .card-question.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card-question h4 {
+            font-size: 1.25rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .option-card {
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-glass);
+            border-radius: 12px;
+            cursor: pointer;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: var(--transition-smooth);
+        }
+
+        .option-card:hover {
+            border-color: var(--cyan-primary);
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.4);
+            color: var(--cyan-primary);
+            background: rgba(0, 210, 255, 0.05);
+        }
+
+        .option-card.selected {
+            border-color: var(--cyan-primary);
+            background: rgba(0, 210, 255, 0.15);
+            color: var(--cyan-primary);
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.4);
+        }
+
+        .input-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 0.9rem 1.2rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-glass);
+            border-radius: 10px;
+            color: var(--text-main);
+            font-size: 1rem;
+            outline: none;
+            transition: var(--transition-smooth);
+        }
+
+        .input-field:focus, .input-field:hover {
+            border-color: var(--cyan-primary);
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.3);
+            background: rgba(0, 210, 255, 0.03);
+        }
+
+        .error-msg {
+            color: #ff4757;
+            font-size: 0.8rem;
+            margin-top: 0.4rem;
+            display: none;
+        }
+
+        .form-nav-btns {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+
+        /* ==========================================================================
+           7. RESOURCE CENTERS (INDICATORS, EA, PODCAST TABS)
+           ========================================================================== */
+        .tab-navigation {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .tab-btn {
+            padding: 0.8rem 1.8rem;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border-glass);
+            color: var(--text-muted);
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .tab-btn.active, .tab-btn:hover {
+            background: linear-gradient(135deg, var(--cyan-primary), var(--blue-accent));
+            color: #fff;
+            border-color: transparent;
+            box-shadow: 0 0 20px rgba(0, 210, 255, 0.4);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .resource-card {
+            overflow: hidden;
+            border-radius: 16px;
+        }
+
+        .media-preview {
+            width: 100%;
+            height: 200px;
+            background: rgba(0,0,0,0.5);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .media-preview iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .play-overlay {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--cyan-primary), var(--blue-accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.2rem;
+            box-shadow: 0 0 20px rgba(0, 210, 255, 0.6);
+            transition: var(--transition-smooth);
+            text-decoration: none;
+        }
+
+        .play-overlay:hover {
+            transform: scale(1.1);
+        }
+
+        .resource-info {
+            padding: 1.5rem;
+        }
+
+        .resource-info h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .resource-info p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+        }
+
+        /* ==========================================================================
+           8. FOOTER & DISCLAIMER
+           ========================================================================== */
+        footer {
+            background: rgba(2, 4, 10, 0.95);
+            border-top: 1px solid var(--border-glass);
+            padding: 4rem 4rem 2rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr repeat(3, 1fr);
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-brand p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            max-width: 320px;
+        }
+
+        .footer-col h5 {
+            font-size: 1rem;
+            margin-bottom: 1.2rem;
+            color: #fff;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-col a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.88rem;
+            transition: var(--transition-smooth);
+        }
+
+        .footer-col a:hover {
+            color: var(--cyan-primary);
+        }
+
+        .risk-disclaimer {
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 2rem;
+            font-size: 0.78rem;
+            color: var(--text-dim);
+            text-align: justify;
+            line-height: 1.6;
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.8rem;
+            color: var(--text-dim);
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 1024px) {
+            .hero { flex-direction: column; text-align: center; padding-top: 7rem; }
+            .hero-content { max-width: 100%; }
+            .hero-actions { justify-content: center; }
+            .founder-grid { grid-template-columns: 1fr; }
+            .services-grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            header { padding: 1rem 1.5rem; }
+            .section-padding { padding: 4rem 1.5rem; }
+            nav { display: none; } /* Simplified mobile menu */
+            .stats-grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .options-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Ambient Glow Background Effects -->
+    <div class="ambient-glow-1"></div>
+    <div class="ambient-glow-2"></div>
+
+    <!-- HEADER / NAVIGATION -->
+    <header>
+        <a href="#" class="logo-container">
+            <div class="logo-icon"></div>
+            <div class="logo-text">1ALPHA<span>PROJECTS</span></div>
+        </a>
+        <nav>
+            <ul>
+                <li><a href="#home" class="active">Home</a></li>
+                <li><a href="#founder">Presenter Ali</a></li>
+                <li><a href="#programs">Programs</a></li>
+                <li><a href="#hub">Alpha Resources</a></li>
+                <li><a href="#apply" class="btn-nav">Apply Now</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <div class="badge">
+                <i class="fa-solid fa-bolt"></i> Official Initiative by Presenter Ali
+            </div>
+            <h1>Empowering Traders With <span class="gradient-text">Institutional Alpha</span></h1>
+            <p>Connect with high-conviction traders through proprietary in-house indicators, fully automated Expert Advisors (EA), and elite 1-on-1 mentorship directly with Africa's leading trading podcaster.</p>
+            <div class="hero-actions">
+                <a href="#programs" class="btn-primary">Explore Solutions <i class="fa-solid fa-arrow-right"></i></a>
+                <a href="#hub" class="btn-secondary"><i class="fa-solid fa-play"></i> Watch Alpha Updates</a>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="founder-img-wrapper">
+                <!-- Using attached Presenter Ali Image -->
+                <img src="bio picture ALI 1.jpeg" alt="Presenter Ali - CEO 1AlphaProjects">
+            </div>
+            <div class="hero-floating-card">
+                <i class="fa-solid fa-chart-line"></i>
+                <div>
+                    <h5 style="color:#fff; font-size:0.9rem;">The Impulsive Strategy</h5>
+                    <p style="color:var(--cyan-primary); font-size:0.8rem; font-weight:700;">3+ Years Battle-Tested</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MEET FOUNDER SECTION -->
+    <section id="founder" class="section-padding">
+        <div class="founder-grid">
+            <div class="founder-card-img glass-card">
+                <img src="presenter ali.jpeg" alt="Presenter Ali">
+            </div>
+            <div class="founder-info">
+                <div class="badge"><i class="fa-solid fa-crown"></i> Founder & Chief Operator</div>
+                <h2>Presenter Ali</h2>
+                <span class="founder-role">CEO, Head of Marketing (1AlphaProjects & NFTH)</span>
+                <p class="founder-bio">
+                    Presenter Ali is a distinguished Forex Trainer and Africa's premier financial podcaster. Operating at the intersection of retail trading execution and media leadership, Ali is the founder and Chief Operator of all flagship ecosystems under 1AlphaProjects. Over 3+ years of live trading, he engineered his signature system—<strong>"The Impulsive Strategy"</strong>—designed to pinpoint high-probability entries with institutional precision.
+                </p>
+
+                <div class="stats-grid">
+                    <div class="stat-card glass-card">
+                        <h4>500K+</h4>
+                        <p>YouTube Subscribers</p>
+                    </div>
+                    <div class="stat-card glass-card">
+                        <h4>300K+</h4>
+                        <p>TikTok Followers</p>
+                    </div>
+                    <div class="stat-card glass-card">
+                        <h4>100K+</h4>
+                        <p>Instagram Followers</p>
+                    </div>
+                </div>
+
+                <div class="social-links">
+                    <a href="https://youtube.com/@presenterali?si=IG2KHHZNWZk-nEmm" target="_blank" class="social-btn"><i class="fa-brands fa-youtube"></i> YouTube</a>
+                    <a href="https://www.tiktok.com/@_presenterali?_r=1&_t=ZS-9Ap4xvWVITV" target="_blank" class="social-btn"><i class="fa-brands fa-tiktok"></i> TikTok</a>
+                    <a href="https://www.instagram.com/presenter_ali?exln=YXV1b2dhN3k1dnl6" target="_blank" class="social-btn"><i class="fa-brands fa-instagram"></i> Instagram</a>
+                    <a href="https://whatsapp.com/channel/0029VbEApT6CMY0OpZROGY0" target="_blank" class="social-btn"><i class="fa-brands fa-whatsapp"></i> Channel</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROGRAMS & SERVICES SECTION -->
+    <section id="programs" class="section-padding" style="background: rgba(0,0,0,0.2);">
+        <div class="section-title">
+            <h2>Ecosystem Solutions</h2>
+            <p>Select your tier of engagement within the 1Alpha trading suite.</p>
+        </div>
+
+        <div class="services-grid">
+            <!-- Tier 1: Indicators -->
+            <div class="service-card glass-card">
+                <div>
+                    <div class="service-header">
+                        <i class="fa-solid fa-sliders"></i>
+                        <h3>1Alpha-Trading Indicators</h3>
+                        <p>Custom in-house indicator suit designed by 1Alpha-Team for beginner and struggling traders.</p>
+                    </div>
+                    <div class="price-tag">$100 <span>/ month (min cap)</span></div>
+                    <ul class="service-features">
+                        <li><i class="fa-solid fa-check"></i> Precise Entry Signal Alerts</li>
+                        <li><i class="fa-solid fa-check"></i> Dynamic Stop Loss (SL) Calculation</li>
+                        <li><i class="fa-solid fa-check"></i> Multi-Target Take Profit (TP) Levels</li>
+                        <li><i class="fa-solid fa-check"></i> Automated Break-Even (BE) Triggers</li>
+                    </ul>
+                </div>
+                <button class="btn-primary" onclick="alert('Indicator access checkout coming soon!')" style="width:100%; justify-content:center;">Get Instant Access</button>
+            </div>
+
+            <!-- Tier 2: 1-on-1 Mentorship -->
+            <div class="service-card glass-card popular">
+                <div class="popular-tag">MOST EXCLUSIVE</div>
+                <div>
+                    <div class="service-header">
+                        <i class="fa-solid fa-user-tie"></i>
+                        <h3>1-on-1 Coaching With Ali</h3>
+                        <p>Direct 2-month intensive training program mastering "The Impulsive Strategy".</p>
+                    </div>
+                    <div class="price-tag">$500 - $15,000 <span>/ 2 Months</span></div>
+                    <ul class="service-features">
+                        <li><i class="fa-solid fa-check"></i> Strictly Limited to 3 Spots / Month</li>
+                        <li><i class="fa-solid fa-check"></i> Complete Impulsive Strategy Mastery</li>
+                        <li><i class="fa-solid fa-check"></i> Direct Personal Oversight by Presenter Ali</li>
+                        <li><i class="fa-solid fa-check"></i> Portfolio Vetting & Risk Management</li>
+                    </ul>
+                </div>
+                <button class="btn-primary" onclick="openModal('mentorship')" style="width:100%; justify-content:center;">Apply for Coaching</button>
+            </div>
+
+            <!-- Tier 3: 1AlphaEA -->
+            <div class="service-card glass-card">
+                <div>
+                    <div class="service-header">
+                        <i class="fa-solid fa-robot"></i>
+                        <h3>1AlphaEA Execution</h3>
+                        <p>Fully automated trading system for capital owners seeking seamless hands-off market execution.</p>
+                    </div>
+                    <div class="price-tag">Invite Only <span>/ Capital Based</span></div>
+                    <ul class="service-features">
+                        <li><i class="fa-solid fa-check"></i> Zero Manual Intervention Needed</li>
+                        <li><i class="fa-solid fa-check"></i> Low Drawdown Risk Management</li>
+                        <li><i class="fa-solid fa-check"></i> Developed & Maintained by 1Alpha Team</li>
+                        <li><i class="fa-solid fa-check"></i> Vetted High-Capital Access Only</li>
+                    </ul>
+                </div>
+                <button class="btn-secondary" onclick="openModal('ea')" style="width:100%; justify-content:center;">Apply for Invite</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- RESOURCE CENTERS (TABS) -->
+    <section id="hub" class="section-padding">
+        <div class="section-title">
+            <h2>1Alpha Resource Hub</h2>
+            <p>Live trading updates, performance breakdowns, and latest podcast episodes.</p>
+        </div>
+
+        <div class="tab-navigation">
+            <button class="tab-btn active" onclick="switchTab(event, 'indicators-tab')">1Alpha Indicators</button>
+            <button class="tab-btn" onclick="switchTab(event, 'ea-tab')">1Alpha EA Updates</button>
+            <button class="tab-btn" onclick="switchTab(event, 'podcast-tab')">1Alpha Podcasts</button>
+        </div>
+
+        <!-- Tab 1: Indicator Performance -->
+        <div id="indicators-tab" class="tab-content active">
+            <div class="resource-grid">
+                <div class="resource-card glass-card">
+                    <div class="media-preview" style="background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8));">
+                        <a href="https://vt.tiktok.com/ZSg9RS4MF/" target="_blank" class="play-overlay"><i class="fa-solid fa-play"></i></a>
+                    </div>
+                    <div class="resource-info">
+                        <h4>Indicator Performance Case Study #1</h4>
+                        <p>Watch live entry/exit signal execution powered by 1Alpha Trading Indicators.</p>
+                    </div>
+                </div>
+                <div class="resource-card glass-card">
+                    <div class="media-preview" style="background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8));">
+                        <a href="https://vt.tiktok.com/ZSg9RBj2Q/" target="_blank" class="play-overlay"><i class="fa-solid fa-play"></i></a>
+                    </div>
+                    <div class="resource-info">
+                        <h4>Indicator Signal Setup & TP Hit</h4>
+                        <p>Breakdown of TP and Break-Even logic automated on charts.</p>
+                    </div>
+                </div>
+                <div class="resource-card glass-card">
+                    <div class="media-preview" style="background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8));">
+                        <a href="https://vt.tiktok.com/ZSg9RJs9o/" target="_blank" class="play-overlay"><i class="fa-solid fa-play"></i></a>
+                    </div>
+                    <div class="resource-info">
+                        <h4>Indicator Session Review</h4>
+                        <p>Live session trades captured with minimal drawdown.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 2: EA Performance -->
+        <div id="ea-tab" class="tab-content">
+            <div class="resource-grid">
+                <div class="resource-card glass-card">
+                    <div class="media-preview">
+                        <a href="https://vt.tiktok.com/ZSg9dTj6V/" target="_blank" class="play-overlay"><i class="fa-solid fa-play"></i></a>
+                    </div>
+                    <div class="resource-info">
+                        <h4>1AlphaEA Performance Proof #1</h4>
+                        <p>Automated execution log overview and profit consistency check.</p>
+                    </div>
+                </div>
+                <div class="resource-card glass-card">
+                    <div class="media-preview">
+                        <a href="https://vt.tiktok.com/ZSg9dWLrV/" target="_blank" class="play-overlay"><i class="fa-solid fa-play"></i></a>
+                    </div>
+                    <div class="resource-info">
+                        <h4>1AlphaEA Live Session Execution</h4>
+                        <p>Fully automated hands-off trading results.</p>
+                    </div>
+                </div>
+                <div class="resource-card glass-card">
+                    <div class="media-preview">
+                        <a href="https://vt.tiktok.com/ZSg9dHn6V/" target="_blank" class="play-overlay"><i class="fa-solid fa-play"></i></a>
+                    </div>
+                    <div class="resource-info">
+                        <h4>1AlphaEA Weekly Profit Summary</h4>
+                        <p>How 1AlphaEA manages account growth seamlessly.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 3: Podcasts -->
+        <div id="podcast-tab" class="tab-content">
+            <div class="resource-grid">
+                <div class="resource-card glass-card">
+                    <div class="media-preview">
+                        <iframe src="https://www.youtube.com/embed/O0mUlFJsRN0" title="1Alpha Podcast"></iframe>
+                    </div>
+                    <div class="resource-info">
+                        <h4>Presenter Ali Interview Series #1</h4>
+                        <p>Deep dive into market psychology and scaling trading accounts.</p>
+                    </div>
+                </div>
+                <div class="resource-card glass-card">
+                    <div class="media-preview">
+                        <iframe src="https://www.youtube.com/embed/cz3DDaLb5NA" title="1Alpha Podcast"></iframe>
+                    </div>
+                    <div class="resource-info">
+                        <h4>Presenter Ali Interview Series #2</h4>
+                        <p>Top insights from elite African entrepreneurs & traders.</p>
+                    </div>
+                </div>
+                <div class="resource-card glass-card">
+                    <div class="media-preview">
+                        <iframe src="https://www.youtube.com/embed/mJBKd0n5VKI" title="1Alpha Podcast"></iframe>
+                    </div>
+                    <div class="resource-info">
+                        <h4>Presenter Ali Interview Series #3</h4>
+                        <p>Unlocking wealth creation strategies through Forex.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- QUESTIONNAIRE MODAL (MENTORSHIP & EA APPLICATION) -->
+    <div id="applicationModal" class="modal">
+        <div class="modal-content glass-card">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            
+            <h3 id="modalTitle" style="font-size:1.6rem; margin-bottom:0.5rem;">Application Form</h3>
+            
+            <div class="application-note" id="modalDisclaimer">
+                <!-- Injected via JavaScript -->
+            </div>
+
+            <div class="step-progress">
+                <div class="step-bar active"></div>
+                <div class="step-bar"></div>
+                <div class="step-bar"></div>
+                <div class="step-bar"></div>
+            </div>
+
+            <form id="questForm" onsubmit="handleFormSubmit(event)">
+                <!-- STEP 1 -->
+                <div class="card-question active" data-step="1">
+                    <h4 id="q1Title">Amount I plan to invest for my personal journey once I am profitable:</h4>
+                    <div class="input-group">
+                        <input type="text" id="q1Input" class="input-field" placeholder="Enter amount in USD (min $2,000)">
+                        <div class="error-msg" id="q1Error">Input must be numbers only and at least $2,000.</div>
+                    </div>
+                </div>
+
+                <!-- STEP 2 (Only for Mentorship) / Employment status for EA -->
+                <div class="card-question" data-step="2">
+                    <h4 id="q2Title">How quick do you want to be profitable?</h4>
+                    <div class="input-group" id="q2InputWrapper">
+                        <input type="text" id="q2Input" class="input-field" placeholder="e.g. 4 Weeks or 2 Months">
+                        <div class="error-msg" id="q2Error">Must include a number accompanied by 'Weeks' or 'Months'.</div>
+                    </div>
+                </div>
+
+                <!-- STEP 3: Employment Status -->
+                <div class="card-question" data-step="3">
+                    <h4>Current Employment Status:</h4>
+                    <div class="options-grid" id="employmentOptions">
+                        <div class="option-card" onclick="selectOption(this, 'Employed')">Employed</div>
+                        <div class="option-card" onclick="selectOption(this, 'Unemployed')">Unemployed</div>
+                        <div class="option-card" onclick="selectOption(this, 'Retired')">Retired</div>
+                        <div class="option-card" onclick="selectOption(this, 'Business Owner')">Business Owner</div>
+                        <div class="option-card" onclick="selectOption(this, 'Student')">Student</div>
+                        <div class="option-card" onclick="selectOption(this, 'Self Employed')">Self Employed</div>
+                    </div>
+                    <div class="error-msg" id="q3Error">Please select one option.</div>
+                </div>
+
+                <!-- STEP 4: Today Capital & Contact Info -->
+                <div class="card-question" data-step="4">
+                    <h4 id="q4Title">Amount in USD you have TODAY towards this investment:</h4>
+                    <div class="input-group">
+                        <input type="text" id="q4Input" class="input-field" placeholder="Enter dollar amount today (e.g. 1000)">
+                        <div class="error-msg" id="q4Error">Numbers only accepted.</div>
+                    </div>
+
+                    <h4 style="margin-top:1.5rem;">Contact Details:</h4>
+                    <div class="input-group">
+                        <label>Full Name</label>
+                        <input type="text" id="fullName" class="input-field" placeholder="John Doe" required>
+                    </div>
+                    <div class="input-group">
+                        <label>WhatsApp Number (With Country Code)</label>
+                        <input type="text" id="whatsapp" class="input-field" value="+" required>
+                        <div class="error-msg" id="waError">Must start with + and contain digits only.</div>
+                    </div>
+                    <div class="input-group">
+                        <label>Email Address</label>
+                        <input type="email" id="email" class="input-field" placeholder="john@example.com" required>
+                        <div class="error-msg" id="emailError">Please enter a valid email address.</div>
+                    </div>
+                </div>
+
+                <div class="form-nav-btns">
+                    <button type="button" class="btn-secondary" id="prevBtn" onclick="moveStep(-1)" style="display:none;">Previous</button>
+                    <button type="button" class="btn-primary" id="nextBtn" onclick="moveStep(1)">Next Step</button>
+                    <button type="submit" class="btn-primary" id="submitBtn" style="display:none;">Submit Application</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- FOOTER & RISK DISCLAIMER -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <a href="#" class="logo-container">
+                    <div class="logo-icon"></div>
+                    <div class="logo-text">1ALPHA<span>PROJECTS</span></div>
+                </a>
+                <p>An elite trading initiative by Presenter Ali. Empowering African and global traders through high-probability strategies, institutional tools, and automated EA execution.</p>
+            </div>
+            <div class="footer-col">
+                <h5>Navigation</h5>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#founder">Presenter Ali</a></li>
+                    <li><a href="#programs">Programs</a></li>
+                    <li><a href="#hub">Resource Hub</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h5>Ecosystem</h5>
+                <ul>
+                    <li><a href="#programs">1Alpha Indicators</a></li>
+                    <li><a href="#programs">1-on-1 Mentorship</a></li>
+                    <li><a href="#programs">1Alpha EA</a></li>
+                    <li><a href="#hub">1Alpha Podcasts</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h5>Official Channels</h5>
+                <ul>
+                    <li><a href="https://whatsapp.com/channel/0029VbEApT6CMY0OpZROGY0" target="_blank">WhatsApp Channel</a></li>
+                    <li><a href="https://youtube.com/@presenterali?si=IG2KHHZNWZk-nEmm" target="_blank">YouTube Channel</a></li>
+                    <li><a href="https://www.tiktok.com/@_presenterali?_r=1&_t=ZS-9Ap4xvWVITV" target="_blank">TikTok Account</a></li>
+                    <li><a href="https://www.instagram.com/presenter_ali?exln=YXV1b2dhN3k1dnl6" target="_blank">Instagram Profile</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- RISK DISCLAIMER -->
+        <div class="risk-disclaimer">
+            <strong>RISK WARNING & DISCLAIMER:</strong> Trading foreign exchange (Forex), CFDs, and financial derivatives carries a high level of risk and may not be suitable for all investors. Leverage creates additional risk and loss exposure. Before deciding to trade Forex or utilize any 1AlphaProjects resources, indicators, or 1AlphaEA, you should carefully consider your investment objectives, level of experience, and risk appetite. You could sustain a loss of some or all of your initial capital; therefore, do not invest money that you cannot afford to lose. 1AlphaProjects, Presenter Ali, and associated teams provide educational mentorship and automated tool applications, but do not provide direct financial investment advice.
+        </div>
+
+        <div class="copyright">
+            &copy; 2026 1AlphaProjects.com. All Rights Reserved. Designed with modern alpha execution.
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Modal State Management
+        let currentType = 'mentorship'; // 'mentorship' or 'ea'
+        let currentStep = 1;
+        let selectedEmployment = '';
+
+        function openModal(type) {
+            currentType = type;
+            currentStep = 1;
+            document.getElementById('applicationModal').style.display = 'flex';
+            
+            const disclaimer = document.getElementById('modalDisclaimer');
+            const modalTitle = document.getElementById('modalTitle');
+            
+            if(type === 'mentorship') {
+                modalTitle.innerText = "1-on-1 Mentorship Application";
+                disclaimer.innerHTML = "<strong>Note:</strong> Presenter Ali mentorship is strictly limited to 3 spots per month. Applicants are vetted based on their needs, target timeframe, and planned capital commitment. You will only be contacted if a slot is available.";
+                document.getElementById('q1Title').innerText = "Amount I plan to invest for my personal journey once I am profitable ($):";
+                document.getElementById('q2Title').innerText = "How quick do you want to be profitable?";
+                document.getElementById('q2InputWrapper').style.display = 'block';
+            } else {
+                modalTitle.innerText = "1AlphaEA Invite-Only Application";
+                disclaimer.innerHTML = "<strong>Note:</strong> 1AlphaEA is invite-only for automated trading. Applicants are vetted based on required speed and investment amount. <em>Disclaimer: The larger your capital amount, the higher the likelihood of selection.</em>";
+                document.getElementById('q1Title').innerText = "Amount I plan to invest for the 1AlphaEA to trade with ($):";
+                document.getElementById('q2Title').innerText = "Current Status Verification";
+                document.getElementById('q2InputWrapper').style.display = 'none'; // Skip timeline for EA
+            }
+
+            updateStepUI();
+        }
+
+        function closeModal() {
+            document.getElementById('applicationModal').style.display = 'none';
+        }
+
+        function switchTab(evt, tabId) {
+            const tabBtns = document.getElementsByClassName('tab-btn');
+            for (let btn of tabBtns) {
+                btn.classList.remove('active');
+            }
+            const tabContents = document.getElementsByClassName('tab-content');
+            for (let content of tabContents) {
+                content.classList.remove('active');
+            }
+            evt.currentTarget.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        function selectOption(element, value) {
+            const cards = document.querySelectorAll('#employmentOptions .option-card');
+            cards.forEach(c => c.classList.remove('selected'));
+            element.classList.add('selected');
+            selectedEmployment = value;
+            document.getElementById('q3Error').style.display = 'none';
+        }
+
+        function moveStep(direction) {
+            if (direction === 1 && !validateCurrentStep()) {
+                return;
+            }
+
+            // Skip step 2 for EA
+            if (currentType === 'ea' && currentStep === 1 && direction === 1) {
+                currentStep = 3;
+            } else if (currentType === 'ea' && currentStep === 3 && direction === -1) {
+                currentStep = 1;
+            } else {
+                currentStep += direction;
+            }
+
+            updateStepUI();
+        }
+
+        function validateCurrentStep() {
+            let isValid = true;
+
+            if (currentStep === 1) {
+                const val = document.getElementById('q1Input').value.trim();
+                const num = parseInt(val, 10);
+                if (isNaN(num) || num < 2000 || !/^\d+$/.test(val)) {
+                    document.getElementById('q1Error').style.display = 'block';
+                    isValid = false;
+                } else {
+                    document.getElementById('q1Error').style.display = 'none';
+                }
+            } else if (currentStep === 2 && currentType === 'mentorship') {
+                const val = document.getElementById('q2Input').value.trim();
+                const regex = /\d+\s*(Weeks|Months|week|month|weeks|months)/i;
+                if (!regex.test(val)) {
+                    document.getElementById('q2Error').style.display = 'block';
+                    isValid = false;
+                } else {
+                    document.getElementById('q2Error').style.display = 'none';
+                }
+            } else if (currentStep === 3) {
+                if (!selectedEmployment) {
+                    document.getElementById('q3Error').style.display = 'block';
+                    isValid = false;
+                }
+            }
+
+            return isValid;
+        }
+
+        function updateStepUI() {
+            const questions = document.querySelectorAll('.card-question');
+            questions.forEach(q => q.classList.remove('active'));
+
+            const currentQ = document.querySelector(`.card-question[data-step="${currentStep}"]`);
+            if (currentQ) currentQ.classList.add('active');
+
+            // Progress Bars
+            const bars = document.querySelectorAll('.step-bar');
+            bars.forEach((bar, idx) => {
+                if (idx < currentStep) bar.classList.add('active');
+                else bar.classList.remove('active');
+            });
+
+            // Buttons
+            document.getElementById('prevBtn').style.display = currentStep === 1 ? 'none' : 'inline-flex';
+            if (currentStep === 4) {
+                document.getElementById('nextBtn').style.display = 'none';
+                document.getElementById('submitBtn').style.display = 'inline-flex';
+            } else {
+                document.getElementById('nextBtn').style.display = 'inline-flex';
+                document.getElementById('submitBtn').style.display = 'none';
+            }
+        }
+
+        // WhatsApp input handling: lock initial '+'
+        const waInput = document.getElementById('whatsapp');
+        waInput.addEventListener('input', function(e) {
+            if (!this.value.startsWith('+')) {
+                this.value = '+' + this.value.replace(/[^0-9]/g, '');
+            } else {
+                this.value = '+' + this.value.substring(1).replace(/[^0-9]/g, '');
+            }
+        });
+
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            
+            // Final step validation
+            const q4Val = document.getElementById('q4Input').value.trim();
+            const emailVal = document.getElementById('email').value.trim();
+            const waVal = document.getElementById('whatsapp').value.trim();
+
+            let valid = true;
+
+            if (!/^\d+$/.test(q4Val)) {
+                document.getElementById('q4Error').style.display = 'block';
+                valid = false;
+            } else {
+                document.getElementById('q4Error').style.display = 'none';
+            }
+
+            if (!emailVal.includes('@') || !emailVal.includes('.')) {
+                document.getElementById('emailError').style.display = 'block';
+                valid = false;
+            } else {
+                document.getElementById('emailError').style.display = 'none';
+            }
+
+            if (waVal.length < 8) {
+                document.getElementById('waError').style.display = 'block';
+                valid = false;
+            } else {
+                document.getElementById('waError').style.display = 'none';
+            }
+
+            if (valid) {
+                alert("Application Submitted Successfully! The 1Alpha team will review your application and contact you via WhatsApp if a slot opens.");
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>
